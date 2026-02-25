@@ -18,15 +18,16 @@ class Stack():
     def peek(self): 
         """ Returns the result if one available, otherwise None """ 
         if len(self.stack) > 0: 
-            return self.stack.pop() 
+            return self.stack[-1]
     def pop(self): 
-        return self.stack.pop() 
+        if len(self.stack) > 0: 
+            return self.stack.pop() 
     def size(self): 
         return len(self.stack) 
     def is_empty(self): 
-        return self.size()
+        return self.size() == 0
     def __repr__(self): 
-        return self.stack 
+        return str(self.stack) 
     
 class Queue(object): 
     def __init__(self): 
@@ -34,10 +35,10 @@ class Queue(object):
     def enqueue(self, item): 
         self.queue.append(item) 
     def dequeue(self): 
-        if len(self.queue > 0): 
+        if len(self.queue) > 0: 
             return self.queue.pop(0) 
     def peak(self): 
-        if len(self.queue > 0): 
+        if len(self.queue) > 0: 
             return self.queue[0] 
     def is_empty(self):
         return self.size() == 0
@@ -45,6 +46,33 @@ class Queue(object):
         return len(self.queue) 
     def __repr__(self):
         return str(self.queue) 
+
+class Deque():
+    def __init__(self):
+        """Creates an empty deque"""
+        self.deque = []
+    def add_front(self, item):
+        self.deque.insert(0, item)
+    def add_rear(self, item):
+        self.deque.append(item)
+    def remove_front(self):
+        if len(self.deque) > 0:
+            return self.deque.pop(0)
+    def remove_rear(self):
+        if len(self.deque) > 0:
+            return self.deque.pop()
+    def peek_front(self):
+        if len(self.deque) > 0:
+            return self.deque[0]
+    def peek_rear(self):
+        if len(self.deque) > 0:
+            return self.deque[-1]
+    def size(self):
+        return len(self.deque)
+    def is_empty(self):
+        return self.size() == 0
+    def __str__(self):
+        return str(self.deque)
 
 class Node(object): 
     def __init__(self, data): 
@@ -60,3 +88,4 @@ class Node(object):
         self.next = new 
     def __repr__(self): 
         return "Node[data = " + str(self.data) + ", next = " + str(self.next) + "]"
+
