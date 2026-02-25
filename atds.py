@@ -47,7 +47,7 @@ class Queue(object):
     def __repr__(self):
         return str(self.queue) 
 
-class Deque():
+class Deque(object):
     def __init__(self):
         """Creates an empty deque"""
         self.deque = []
@@ -88,4 +88,50 @@ class Node(object):
         self.next = new 
     def __repr__(self): 
         return "Node[data = " + str(self.data) + ", next = " + str(self.next) + "]"
+    
+class UnorderedList(object): 
+    def __init__(self): 
+        self.head = None 
+    def add(self, item): 
+        new_node = Node(item) 
+        new_node.set_next(self.head) 
+        self.head = new_node 
+    def length(self):
+        node_count = 0
+        current = self.head 
+        while current != None: 
+            node_count += 1 
+            current = current.get_next() 
+        return node_count
+    def is_empty(self): 
+        return self.head == None 
+    def remove(self, item): 
+        previous = None 
+        current = self.head 
+        while current != None:
+            if current.get_data() == item: 
+                if previous == None: 
+                    self.head = current.get_next()
+                else: 
+                    previous.set_next(current.get_next()) 
+                return 
+            else: 
+                previous = current 
+                current = current.get_next() 
+        return #default 
+    
+
+    def __repr__(self):
+        """Creates a representation of the list suitable for printing, debugging. """
+        result = "UnorderedList["
+        next_node = self.head
+        while next_node != None:
+            result += str(next_node.get_data()) + ","
+            next_node = next_node.get_next()
+        #if result[-1] == ",":
+        #    result = result[:-1] # (remove trailing comma)
+        result = result + "]"
+        return result 
+    
+
 
