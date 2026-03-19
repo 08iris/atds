@@ -106,20 +106,89 @@ class UnorderedList(object):
     def is_empty(self): 
         return self.head == None 
     def remove(self, item): 
-        previous = None 
+        prev = None 
         current = self.head 
         while current != None:
             if current.get_data() == item: 
-                if previous == None: 
+                if prev == None: 
                     self.head = current.get_next()
                 else: 
-                    previous.set_next(current.get_next()) 
+                    prev.set_next(current.get_next()) 
                 return 
-            else: 
-                previous = current 
+            else:
+                prev = current 
                 current = current.get_next() 
         return #default 
+    def search(self, item): 
+        current = self.head
+        while current != None: 
+            if current.get_data() == item: 
+                return True 
+            current = current.get_next()
+        return False 
+    def append(self, item): 
+        new_node = Node(item) 
+        if self.head == None: 
+            self.head = new_node 
+            return 
+        current = self.head 
+        while current.get_next() != None:
+             current = current.get_next() 
+        current.set_next(new_node) 
+    def index(self, item): 
+        current = self.head 
+        pos = 0 
+        while current != None: 
+            if current.get_data() == item: 
+                return pos 
+            current = current.get_next()
+            pos += 1 
+    def insert(self, pos, item): 
+        new_node = Node(item) 
+        if pos == 0: 
+            new_node.set_next(self.head)
+            self.head = new_node 
+            return 
+        
+        current = self.head
+        prev = None 
+        index = 0 
+
+        while index < pos: 
+            prev = current 
+            current = current.get_next() 
+            index += 1 
+        
+        new_node.set_next(current) 
+        prev.set_next(new_node) 
     
+    def pop(self, pos=None):
+        if pos == None:
+            current = self.head
+            prev = None
+            while current.get_next() != None: 
+                prev = current
+                current = current.get_next() 
+            if prev == None: 
+                self.head = None 
+            else: 
+                prev.set_next(None) 
+            return current.get_data() 
+    
+        current = self.head 
+        prev = None 
+        index = 0 
+
+        while index < pos: 
+            prev = current 
+            current = current.get_next() 
+            index += 1 
+        if prev == None: 
+            self.head = current.get_next() 
+        else: 
+            prev.set_next(current.get_next()) 
+
+        return current.get_data 
 
     def __repr__(self):
         """Creates a representation of the list suitable for printing, debugging. """
@@ -128,10 +197,29 @@ class UnorderedList(object):
         while next_node != None:
             result += str(next_node.get_data()) + ","
             next_node = next_node.get_next()
-        #if result[-1] == ",":
-        #    result = result[:-1] # (remove trailing comma)
+        if result[-1] == ",":
+            result = result[:-1] # (remove trailing comma)
         result = result + "]"
         return result 
-    
+
+class UnorderedListStack(object): 
+    def __init__(self): 
+        self.ul = UnorderedList()
+    def push(self, item): 
+        self.ud.add(item) 
+    def pop(self): 
+        return self.ul.pop(0) 
+    def peek(self): 
+        item = self.ul.pop(0) 
+        self.ul.add(item) 
+        return item 
+    def is_empty(self): 
+        return self.ul.is_empty() 
+    def length(self): 
+        return self.ul.length() 
+
+                
+
+
 
 
