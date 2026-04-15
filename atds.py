@@ -188,7 +188,7 @@ class UnorderedList(object):
         else: 
             prev.set_next(current.get_next()) 
 
-        return current.get_data 
+        return current.get_data() 
 
     def __repr__(self):
         """Creates a representation of the list suitable for printing, debugging. """
@@ -206,20 +206,61 @@ class UnorderedListStack(object):
     def __init__(self): 
         self.ul = UnorderedList()
     def push(self, item): 
-        self.ud.add(item) 
+        self.ul.add(item) 
     def pop(self): 
         return self.ul.pop(0) 
     def peek(self): 
-        item = self.ul.pop(0) 
-        self.ul.add(item) 
-        return item 
+        if self.ul.is_empty():
+            return None
+        return self.ul.head.get_data()
     def is_empty(self): 
         return self.ul.is_empty() 
     def length(self): 
         return self.ul.length() 
 
-                
+class BinarySearcher(object): 
+    def search(self, arr: list, value: int): 
+        if len(arr) == 0: 
+            return None 
+        lower = 0
+        higher = len(arr) - 1
+        while lower <= higher:
+            middle = (lower + higher) // 2 
+            if arr[middle] == value: 
+                return middle 
+            elif value < arr[middle]: 
+                higher = middle - 1 
+            else: 
+                lower = middle + 1 
+        return None
 
+#class BinarySearcherRecursive(object): 
+    #def __init__(self): 
+        pass 
+    #def search(self, arr, value): 
 
+class LinearSearcher(object):
+    def search(self, arr, value):
+        i = 0
+        while i < len(arr):
+            if arr[i] == value:
+                return i
+            i += 1
+        return None
 
+class HashTable(object): 
+    def __init__(self, m): 
+        self.m = m 
+        self.keys = m * [None]
+        self.values = m * [None]
+    def hash_function(self, key, m): 
+        return key % m 
+    def put(self, key, value): 
+        hash = self.hash_function(key, self.m) 
+        while self.keys[hash] != None: 
+            hash = (hash + 1) % self.m  
+        self.keys[hash] = key 
+        self.values[hash] = value
+    
 
+    
