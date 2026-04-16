@@ -234,11 +234,17 @@ class BinarySearcher(object):
                 lower = middle + 1 
         return None
 
-#class BinarySearcherRecursive(object): 
-    #def __init__(self): 
-        pass 
-    #def search(self, arr, value): 
-
+class BinarySearcherRecursive(object):
+    def search(self, arr, value, lower, upper):
+        if lower > upper:
+            return None
+        mid = (lower + upper) // 2
+        if arr[mid] == value:
+            return mid
+        if value < arr[mid]:
+            return self.search(arr, value, lower, mid - 1)
+        return self.search(arr, value, mid + 1, upper)
+    
 class LinearSearcher(object):
     def search(self, arr, value):
         i = 0
@@ -253,14 +259,23 @@ class HashTable(object):
         self.m = m 
         self.keys = m * [None]
         self.values = m * [None]
+    def __repr__(self):
+        return "Keys: " + str(self.keys) + " Values: " + str(self.values)
     def hash_function(self, key, m): 
         return key % m 
     def put(self, key, value): 
         hash = self.hash_function(key, self.m) 
-        while self.keys[hash] != None: 
+        while self.keys[hash] != None and self.keys[hash] != key: 
             hash = (hash + 1) % self.m  
         self.keys[hash] = key 
         self.values[hash] = value
-    
-
-    
+    def get(self, key):
+        hash = self.hash_function(key, self.m)
+        start = hash 
+        while self.keys[hash] != None:
+            if self.keys[hash] == key:
+                return self.values[hash]
+            hash = (hash + 1) % self.m
+            if hash == start:
+                return None
+        return None
